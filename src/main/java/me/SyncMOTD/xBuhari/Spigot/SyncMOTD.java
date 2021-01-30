@@ -3,14 +3,14 @@ package me.SyncMOTD.xBuhari.Spigot;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SyncMOTD extends JavaPlugin {
-    private SyncMOTD plugin;
+    private static SyncMOTD plugin;
 
     @Override
     public void onEnable() {
         plugin = this;
     }
 
-    public SyncMOTD getPlugin() {
+    public static SyncMOTD getPlugin() {
         return plugin;
     }
 }
