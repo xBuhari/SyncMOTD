@@ -113,8 +113,8 @@ public class RemoteServer {
         while ((len = in.read(buf)) != -1) {
             baos.write(buf, 0, len);
         }
-        this.alltext = new String(baos.toByteArray(), encoding);
 
+        this.alltext = new String(baos.toByteArray(), encoding);
     }
 
     public void updateVariables() {
