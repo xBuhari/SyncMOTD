@@ -1,4 +1,4 @@
-package me.SyncMOTD.xBuhari;
+package me.SyncMOTD.xBuhari.Spigot;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
