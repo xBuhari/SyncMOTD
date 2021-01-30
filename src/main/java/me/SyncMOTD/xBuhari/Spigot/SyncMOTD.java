@@ -11,8 +11,9 @@ public class SyncMOTD extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        Util.load();
         motdManager = new MotdManager();
+        Util.load();
+
     }
 
     public static SyncMOTD getPlugin() {
