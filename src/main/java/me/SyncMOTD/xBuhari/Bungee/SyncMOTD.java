@@ -10,7 +10,7 @@ import java.io.*;
 public class SyncMOTD extends PluginBase {
     private static SyncMOTD plugin;
     private Configuration configuration;
-    private MotdManager motdManager;
+    protected MotdManager motdManager;
 
     @Override
     public void onEnable() {

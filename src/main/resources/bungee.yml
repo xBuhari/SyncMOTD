@@ -2,3 +2,6 @@ name: SyncMOTD
 version: 1.0.0
 main: me.SyncMOTD.xBuhari.Bungee.SyncMOTD
 author: xBuhariPvP
+commands:
+  syncmotd:
+    description: Main command of plugin.
