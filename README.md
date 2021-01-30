@@ -4,10 +4,8 @@ Synchronizing with another server`s motd.
 
 ------------
 
-
-##### This plugin using  `api.mcsrvstat.us`
 ##### This plugin has BungeeCord and Spigot support.
-##### Restart the server to reload plugin.
+##### Use '/syncmotd reload' on console to reload plugin.
 
 ##### For support contact me on Discord: `Buhari#8356`
 
@@ -20,6 +18,7 @@ motd:
   useFavicon: true  # Sync with favicon?
   useMaxPlayers: true # Sync with playerCount/MaxplayerCount?
   useMotd: true  # Sync with MOTD?
+  useSample: true # Sync with Sample?
   remote:
     use: true  # Do u want use this plugin?
     updateTime: 5  # How long will it take to be updated?
