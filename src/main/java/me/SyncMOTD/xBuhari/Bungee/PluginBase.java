@@ -1,8 +1,6 @@
 package me.SyncMOTD.xBuhari.Bungee;
 
 import java.io.*;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.google.common.io.ByteStreams;
@@ -56,42 +54,7 @@ public abstract class PluginBase extends Plugin {
         }
     }
 
-    public void LoadFile() {
-        File configfile;
-        if (!getDataFolder().exists()) {
-            getDataFolder().mkdir();
-        }
-        if (!(configfile = new File(getDataFolder(), "config.yml")).exists()) {
-            try {
-                Files.copy(getResourceAsStream("config.yml"), configfile.toPath(), new CopyOption[0]);
-            }
-            catch (IOException var1_1) {
-            }
-        }
-        try {
-            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void ReloadFile() {
-        File configfile;
-        if (!getDataFolder().exists()) {
-            getDataFolder().mkdir();
-        }
-        if (!(configfile = new File(getDataFolder(), "config.yml")).exists()) {
-            try {
-                Files.copy(getResourceAsStream("config.yml"), configfile.toPath(), new CopyOption[0]);
-            }
-            catch (IOException var1_1) {
-            }
-        }
-        try {
-            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void reloadConfig() throws IOException {
+        SyncMOTD.getPlugin().configuration = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(),"config.yml"));
     }
 }

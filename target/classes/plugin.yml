@@ -1,4 +1,7 @@
 name: SyncMOTD
-version: 1.0.0
+version: 1.2.0
 main: me.SyncMOTD.xBuhari.Spigot.SyncMOTD
 author: xBuhariPvP
+commands:
+  syncmotd:
+    description: Main command of plugin.
