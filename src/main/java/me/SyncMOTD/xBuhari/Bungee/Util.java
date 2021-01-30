@@ -1,13 +1,12 @@
 package me.SyncMOTD.xBuhari.Bungee;
 
-import me.SyncMOTD.xBuhari.Spigot.SyncMOTD;
-import me.SyncMOTD.xBuhari.Spigot.motd.listeners.PingListener;
-import org.bukkit.Bukkit;
+import me.SyncMOTD.xBuhari.Bungee.motd.listeners.PingListener;
 
 public class Util {
 
-    public static void load() {
-
+    public void load() {
+        SyncMOTD.getPlugin().saveDefaultConfig();
+        SyncMOTD.getPlugin().registerListener(new PingListener());
     }
 
 }
