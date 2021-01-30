@@ -1,0 +1,16 @@
+motd:
+  useFavicon: true
+  useMaxPlayers: true
+  useMotd: true
+  remote:
+    use: true
+    updateTime: 5
+    server:
+      IP: 'mc.hypixel.net'
+      Port: 25565
+    proxy:
+      use: false
+      server:
+        IP: '188.166.34.137'
+        Port: 9000
+        ProxyType: SOCKS
