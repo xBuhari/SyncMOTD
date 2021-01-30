@@ -12,6 +12,7 @@ public class SyncMOTD extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         motdManager = new MotdManager();
+        Util.load();
     }
 
     public static SyncMOTD getPlugin() {
