@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SyncMOTD extends JavaPlugin {
     private static SyncMOTD plugin;
 
-    private MotdManager motdManager;
+    protected MotdManager motdManager;
 
     @Override
     public void onEnable() {

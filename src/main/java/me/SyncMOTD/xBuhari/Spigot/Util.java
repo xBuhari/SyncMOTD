@@ -8,6 +8,7 @@ public class Util {
     public static void load() {
         Bukkit.getServer().getPluginManager().registerEvents(new PingListener(), SyncMOTD.getPlugin());
         SyncMOTD.getPlugin().saveDefaultConfig();
+        SyncMOTD.getPlugin().getCommand("syncmotd").setExecutor(new SyncMOTDcmd());
     }
 
 }
