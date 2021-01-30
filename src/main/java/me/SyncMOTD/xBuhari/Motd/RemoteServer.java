@@ -1,9 +1,8 @@
 package me.SyncMOTD.xBuhari.Motd;
 
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,21 +25,22 @@ public class RemoteServer {
     private Type ProxyType;
 
     //Server
-    private String name, ip, status;
-    private int port;
-    private int playercount;
-    private int maxpcount;
+    private String ServerIP;
+    private String[] ServerMOTD;
+    private int ServerPort;
+    private int ServerPlayerCount;
+    private int ServerMaxPlayerCount;
 
     public RemoteServer(String ip, int port) {
         this.useProxy = false;
-        this.ip = ip;
-        this.port = port;
+        this.ServerIP = ip;
+        this.ServerPort = port;
     }
 
     public RemoteServer(String ip, int port, String proxyIP, Integer proxyPort, String proxyType) {
         this.useProxy = true;
-        this.ip = ip;
-        this.port = port;
+        this.ServerIP = ip;
+        this.ServerPort = port;
         this.ProxyIP = proxyIP;
         this.ProxyPort = proxyPort;
         switch (proxyType) {
@@ -65,32 +65,28 @@ public class RemoteServer {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
     public String getIP() {
-        return ip;
+        return ServerIP;
     }
 
     public int getPort() {
-        return port;
+        return ServerPort;
     }
 
     public int getOnline() {
-        return playercount;
+        return ServerPlayerCount;
     }
 
     public int getMaxPlayers() {
-        return maxpcount;
+        return ServerMaxPlayerCount;
     }
 
-    public String getMotd() {
-        return status;
+    public String[] getMotd() {
+        return ServerMOTD;
     }
 
-    public void update() throws IOException, ParseException {
-        URL url = new URL("https://api.mcsrvstat.us/2/mc.hypixel.net");
+    public void update() throws IOException {
+        URL url = new URL("https://api.mcsrvstat.us/2/" + getIP() + ":" + getPort());
 
         URLConnection urlConnection;
         if (useProxy) {
@@ -115,9 +111,22 @@ public class RemoteServer {
         }
 
         this.alltext = new String(baos.toByteArray(), encoding);
+        this.updateVariables();
     }
 
-    public void updateVariables() {
+    public void updateVariables()  {
+        Gson gson = new Gson();
+        JsonObject j = gson.fromJson(alltext, JsonObject.class);
 
+        //this.ServerIP = j.get("ip").getAsString();
+        //this.ServerPort = j.get("port").getAsInt();
+        this.ServerMOTD = gson.fromJson(j.get("motd").getAsJsonObject().get("raw"),  String[].class);
+        this.ServerPlayerCount = j.get("players").getAsJsonObject().get("online").getAsInt();
+        this.ServerMaxPlayerCount = j.get("players").getAsJsonObject().get("max").getAsInt();
+
+        System.out.println(getOnline());
+                //String result = jobj.get("debug").getAsJsonObject().get("ping").getAsString();
+
+     //   System.out.println(result);
     }
 }
