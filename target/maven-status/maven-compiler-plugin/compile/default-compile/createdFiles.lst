@@ -5,6 +5,11 @@ me\SyncMOTD\xBuhari\Spigot\motd\listeners\PingListener.class
 me\SyncMOTD\xBuhari\Bungee\PluginBase.class
 me\SyncMOTD\xBuhari\Bungee\motd\listeners\PingListener.class
 me\SyncMOTD\xBuhari\Motd\RemoteServer.class
+me\SyncMOTD\xBuhari\Motd\ServerListPing17$Version.class
+me\SyncMOTD\xBuhari\Motd\ServerListPing17$Players.class
+me\SyncMOTD\xBuhari\Motd\ServerListPing17$StatusResponse.class
 me\SyncMOTD\xBuhari\Spigot\SyncMOTD.class
 me\SyncMOTD\xBuhari\Spigot\motd\MotdManager.class
+me\SyncMOTD\xBuhari\Motd\ServerListPing17$Player.class
+me\SyncMOTD\xBuhari\Motd\ServerListPing17.class
 me\SyncMOTD\xBuhari\Spigot\Util.class

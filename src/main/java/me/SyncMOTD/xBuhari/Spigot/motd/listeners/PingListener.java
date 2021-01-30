@@ -17,7 +17,7 @@ public class PingListener implements Listener {
 
     @EventHandler
     public void onServerPing(ServerListPingEvent e) {
-        if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useIcon")) {
+        if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useFavicon")) {
             try {e.setServerIcon(Bukkit.loadServerIcon(this.motdManager.getRemoteServer().getServerIcon())); } catch (Exception exception) {}
         }
         if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useMotd")) {

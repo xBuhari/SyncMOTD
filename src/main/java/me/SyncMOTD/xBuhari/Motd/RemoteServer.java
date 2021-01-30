@@ -1,24 +1,16 @@
 package me.SyncMOTD.xBuhari.Motd;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import me.SyncMOTD.xBuhari.Motd.ServerListPing17.Player;
 import me.SyncMOTD.xBuhari.Motd.ServerListPing17.StatusResponse;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Proxy.Type;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RemoteServer {
 
@@ -38,7 +30,7 @@ public class RemoteServer {
     private int ServerPlayerCount;
     private int ServerMaxPlayerCount;
     private BufferedImage ServerIcon;
-    private List<String> SamplePlayers;
+    private List<Player> SamplePlayers;
 
     public RemoteServer(String ip, int port) {
         this.useProxy = false;
@@ -99,11 +91,11 @@ public class RemoteServer {
     }
 
 
-    public List<String> getSamplePlayers() {
+    public List<Player> getSamplePlayers() {
         return SamplePlayers;
     }
 
-    private void update() throws IOException {
+    public void update() throws IOException {
         ServerListPing17 serverListPing17 = new ServerListPing17();
         serverListPing17.setAddress(new InetSocketAddress(this.ServerIP, this.ServerPort));
 
@@ -118,7 +110,6 @@ public class RemoteServer {
         this.ServerPlayerCount = statusResponse.getPlayers().getOnline();
         this.ServerMaxPlayerCount = statusResponse.getPlayers().getMax();
         this.ServerIcon = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(statusResponse.getFavicon().split(",")[1])));
-        this.SamplePlayers = statusResponse.getPlayers().getSample().stream().map(Player::getName).collect(Collectors.toList());
-
+        this.SamplePlayers = statusResponse.getPlayers().getSample();
     }
 }

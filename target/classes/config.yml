@@ -2,6 +2,7 @@ motd:
   useFavicon: true  # Sync with favicon?
   useMaxPlayers: true # Sync with playerCount/MaxplayerCount?
   useMotd: true  # Sync with MOTD?
+  useSample: true # Sync with Sample?
   remote:
     use: true  # Do u want use this plugin?
     updateTime: 5  # How long will it take to be updated?

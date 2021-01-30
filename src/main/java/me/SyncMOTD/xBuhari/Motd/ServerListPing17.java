@@ -1,6 +1,8 @@
 package me.SyncMOTD.xBuhari.Motd;
 
 import com.google.gson.Gson;
+import net.md_5.bungee.api.ServerPing.PlayerInfo;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -97,6 +99,8 @@ public class ServerListPing17 {
         inputStream = socket.getInputStream();
         inputStreamReader = new InputStreamReader(inputStream);
 
+
+
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         DataOutputStream handshake = new DataOutputStream(b);
         handshake.writeByte(0x00); //packet id for handshake
@@ -135,7 +139,7 @@ public class ServerListPing17 {
 
         byte[] in = new byte[length];
         dataInputStream.readFully(in);  //read json string
-        String json = new String(in);
+        String json = new String(in, "UTF-8");
 
 
         long now = System.currentTimeMillis();
@@ -230,6 +234,9 @@ public class ServerListPing17 {
             return id;
         }
 
+        public PlayerInfo getInfo() {
+            return new PlayerInfo(name, id);
+        }
     }
 
     public class Version {

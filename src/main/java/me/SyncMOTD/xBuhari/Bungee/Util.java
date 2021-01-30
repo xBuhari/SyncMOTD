@@ -8,5 +8,4 @@ public class Util {
         SyncMOTD.getPlugin().saveDefaultConfig();
         SyncMOTD.getPlugin().registerListener(new PingListener());
     }
-
 }
