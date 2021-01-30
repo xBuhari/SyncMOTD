@@ -9,7 +9,6 @@ public class MotdManager {
 
     private Boolean useRemote;
 
-    private LocalServer localServer;
     private RemoteServer remoteServer;
 
     public MotdManager() {
@@ -17,9 +16,7 @@ public class MotdManager {
         this.useRemote = plugin.getConfig().getBoolean("motd.remote.use");
     }
 
-    public LocalServer getLocalServer() {
-        return localServer;
-    }
+
 
     public RemoteServer getRemoteServer() {
         return remoteServer;

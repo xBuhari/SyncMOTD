@@ -1,9 +1,11 @@
 package me.SyncMOTD.xBuhari.Motd;
 
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +14,7 @@ import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Base64;
 
 public class RemoteServer {
 
@@ -30,6 +33,7 @@ public class RemoteServer {
     private int ServerPort;
     private int ServerPlayerCount;
     private int ServerMaxPlayerCount;
+    private BufferedImage ServerIcon;
 
     public RemoteServer(String ip, int port) {
         this.useProxy = false;
@@ -85,6 +89,10 @@ public class RemoteServer {
         return ServerMOTD;
     }
 
+    public BufferedImage getServerIcon() {
+        return ServerIcon;
+    }
+
     public void update() throws IOException {
         URL url = new URL("https://api.mcsrvstat.us/2/" + getIP() + ":" + getPort());
 
@@ -114,7 +122,7 @@ public class RemoteServer {
         this.updateVariables();
     }
 
-    public void updateVariables()  {
+    private void updateVariables() throws IOException {
         Gson gson = new Gson();
         JsonObject j = gson.fromJson(alltext, JsonObject.class);
 
@@ -123,10 +131,6 @@ public class RemoteServer {
         this.ServerMOTD = gson.fromJson(j.get("motd").getAsJsonObject().get("raw"),  String[].class);
         this.ServerPlayerCount = j.get("players").getAsJsonObject().get("online").getAsInt();
         this.ServerMaxPlayerCount = j.get("players").getAsJsonObject().get("max").getAsInt();
-
-        System.out.println(getOnline());
-                //String result = jobj.get("debug").getAsJsonObject().get("ping").getAsString();
-
-     //   System.out.println(result);
+        this.ServerIcon = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(j.get("icon").getAsString())));
     }
 }
