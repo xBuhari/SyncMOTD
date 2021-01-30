@@ -19,15 +19,13 @@ public class MotdManager {
         this.plugin = SyncMOTD.getPlugin();
         this.useRemote = plugin.getConfig().getBoolean("motd.remote.use");
         this.updateTime = plugin.getConfig().getInt("motd.remote.updateTime");
-
         Bukkit.getScheduler().cancelTasks(SyncMOTD.getPlugin());
         if (useRemote) {
-            Bukkit.getScheduler().runTaskLaterAsynchronously(SyncMOTD.getPlugin(), () -> {
+            Bukkit.getScheduler().runTaskTimerAsynchronously(SyncMOTD.getPlugin(), () -> {
                 this.update();
-            }, 20L * 60 * this.updateTime);
+            },20L, 20L * 60 * this.updateTime);
         }
     }
-
 
     public RemoteServer getRemoteServer() {
         return remoteServer;

@@ -1,9 +1,12 @@
 motd:
+  useFavicon: true
+  useMaxPlayers: true
+  useMotd: true
   remote:
     use: true
     updateTime: 5
     server:
-      IP: '172.65.210.190'
+      IP: 'mc.hypixel.net'
       Port: 25565
     proxy:
       use: false

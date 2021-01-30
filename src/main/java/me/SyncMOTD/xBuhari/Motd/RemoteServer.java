@@ -123,14 +123,14 @@ public class RemoteServer {
     }
 
     private void updateVariables() throws IOException {
-        Gson gson = new Gson();
-        JsonObject j = gson.fromJson(alltext, JsonObject.class);
+        JsonObject j = new Gson().fromJson(alltext, JsonObject.class);
 
-        //this.ServerIP = j.get("ip").getAsString();
-        //this.ServerPort = j.get("port").getAsInt();
-        this.ServerMOTD = gson.fromJson(j.get("motd").getAsJsonObject().get("raw"),  String[].class);
+        this.ServerIP = j.get("ip").getAsString();
+        this.ServerPort = j.get("port").getAsInt();
+        this.ServerPort = j.get("port").getAsInt();
+        this.ServerMOTD = new Gson().fromJson(j.get("motd").getAsJsonObject().get("raw"),  String[].class);
         this.ServerPlayerCount = j.get("players").getAsJsonObject().get("online").getAsInt();
         this.ServerMaxPlayerCount = j.get("players").getAsJsonObject().get("max").getAsInt();
-        this.ServerIcon = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(j.get("icon").getAsString())));
+        this.ServerIcon = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(j.get("icon").getAsString().split(",")[1])));
     }
 }

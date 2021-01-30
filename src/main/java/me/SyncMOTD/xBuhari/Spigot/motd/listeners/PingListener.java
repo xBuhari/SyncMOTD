@@ -7,8 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
-import java.util.Arrays;
-
 public class PingListener implements Listener {
 
     private MotdManager motdManager;
@@ -19,8 +17,14 @@ public class PingListener implements Listener {
 
     @EventHandler
     public void onServerPing(ServerListPingEvent e) {
-        try {e.setServerIcon(Bukkit.loadServerIcon(this.motdManager.getRemoteServer().getServerIcon())); } catch (Exception exception) {}
-        e.setMotd(Arrays.toString(this.motdManager.getRemoteServer().getMotd()));
-        e.setMaxPlayers(this.motdManager.getRemoteServer().getMaxPlayers());
+        if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useIcon")) {
+            try {e.setServerIcon(Bukkit.loadServerIcon(this.motdManager.getRemoteServer().getServerIcon())); } catch (Exception exception) {}
+        }
+        if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useMotd")) {
+            e.setMotd(this.motdManager.getRemoteServer().getMotd()[0] +"\n" + this.motdManager.getRemoteServer().getMotd()[1]);
+        }
+        if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useMaxPlayers")) {
+            e.setMaxPlayers(this.motdManager.getRemoteServer().getMaxPlayers());
+        }
     }
 }
