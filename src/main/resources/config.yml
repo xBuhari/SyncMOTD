@@ -1,0 +1,13 @@
+motd:
+  remote:
+    use: true
+    updateTime: 5
+    server:
+      IP: '172.65.210.190'
+      Port: 25565
+    proxy:
+      use: false
+      server:
+        IP: '188.166.34.137'
+        Port: 9000
+        ProxyType: SOCKS
