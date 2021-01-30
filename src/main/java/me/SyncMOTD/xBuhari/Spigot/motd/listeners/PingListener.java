@@ -21,7 +21,7 @@ public class PingListener implements Listener {
             try {e.setServerIcon(Bukkit.loadServerIcon(this.motdManager.getRemoteServer().getServerIcon())); } catch (Exception exception) {}
         }
         if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useMotd")) {
-            e.setMotd(this.motdManager.getRemoteServer().getMotd()[0] +"\n" + this.motdManager.getRemoteServer().getMotd()[1]);
+            e.setMotd(this.motdManager.getRemoteServer().getMotd());
         }
         if (SyncMOTD.getPlugin().getConfig().getBoolean("motd.useMaxPlayers")) {
             e.setMaxPlayers(this.motdManager.getRemoteServer().getMaxPlayers());

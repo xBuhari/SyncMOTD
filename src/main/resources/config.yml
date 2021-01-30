@@ -1,16 +1,17 @@
 motd:
-  useFavicon: true
-  useMaxPlayers: true
-  useMotd: true
+  useFavicon: true  # Sync with favicon?
+  useMaxPlayers: true # Sync with playerCount/MaxplayerCount?
+  useMotd: true  # Sync with MOTD?
+  useSample: true # Sync with Sample?
   remote:
-    use: true
-    updateTime: 5
-    server:
-      IP: 'mc.hypixel.net'
-      Port: 25565
-    proxy:
-      use: false
-      server:
-        IP: '188.166.34.137'
-        Port: 9000
-        ProxyType: SOCKS
+    use: true  # Do u want use this plugin?
+    updateTime: 5  # How long will it take to be updated?
+    server:  # Remote Server Info.
+      IP: 'mc.hypixel.net'  # Remote Server IP Adress
+      Port: 25565  # Remote Server Port
+    proxy:  # Proxy Settings
+      use: false  # Do u want use Proxy?
+      server:  # Proxy Settings
+        IP: '188.166.34.137'  # Proxy IP Adress
+        Port: 9000  # Proxy Port
+        ProxyType: SOCKS  # Proxy Type (SOCKS,HTTP)

@@ -2,6 +2,8 @@ package me.SyncMOTD.xBuhari.Motd;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import me.SyncMOTD.xBuhari.Motd.ServerListPing17.Player;
+import me.SyncMOTD.xBuhari.Motd.ServerListPing17.StatusResponse;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,6 +17,8 @@ import java.net.Proxy.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RemoteServer {
 
@@ -29,11 +33,12 @@ public class RemoteServer {
 
     //Server
     private String ServerIP;
-    private String[] ServerMOTD;
+    private String ServerMOTD;
     private int ServerPort;
     private int ServerPlayerCount;
     private int ServerMaxPlayerCount;
     private BufferedImage ServerIcon;
+    private List<String> SamplePlayers;
 
     public RemoteServer(String ip, int port) {
         this.useProxy = false;
@@ -85,7 +90,7 @@ public class RemoteServer {
         return ServerMaxPlayerCount;
     }
 
-    public String[] getMotd() {
+    public String getMotd() {
         return ServerMOTD;
     }
 
@@ -93,44 +98,27 @@ public class RemoteServer {
         return ServerIcon;
     }
 
-    public void update() throws IOException {
-        URL url = new URL("https://api.mcsrvstat.us/2/" + getIP() + ":" + getPort());
 
-        URLConnection urlConnection;
-        if (useProxy) {
-            Proxy proxy = new Proxy(this.ProxyType, new InetSocketAddress(this.ProxyIP, this.ProxyPort));
-            urlConnection = url.openConnection(proxy);
-        }
-        else {
-            urlConnection = url.openConnection();
-        }
-
-        InputStream in = urlConnection.getInputStream();
-
-        String encoding = urlConnection.getContentEncoding();
-        encoding = encoding == null ? "UTF-8" : encoding;
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        byte[] buf = new byte[8192];
-        int len = 0;
-        while ((len = in.read(buf)) != -1) {
-            baos.write(buf, 0, len);
-        }
-
-        this.alltext = new String(baos.toByteArray(), encoding);
-        this.updateVariables();
+    public List<String> getSamplePlayers() {
+        return SamplePlayers;
     }
 
-    private void updateVariables() throws IOException {
-        JsonObject j = new Gson().fromJson(alltext, JsonObject.class);
+    private void update() throws IOException {
+        ServerListPing17 serverListPing17 = new ServerListPing17();
+        serverListPing17.setAddress(new InetSocketAddress(this.ServerIP, this.ServerPort));
 
-        this.ServerIP = j.get("ip").getAsString();
-        this.ServerPort = j.get("port").getAsInt();
-        this.ServerPort = j.get("port").getAsInt();
-        this.ServerMOTD = new Gson().fromJson(j.get("motd").getAsJsonObject().get("raw"),  String[].class);
-        this.ServerPlayerCount = j.get("players").getAsJsonObject().get("online").getAsInt();
-        this.ServerMaxPlayerCount = j.get("players").getAsJsonObject().get("max").getAsInt();
-        this.ServerIcon = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(j.get("icon").getAsString().split(",")[1])));
+        if (useProxy) {
+            Proxy proxy = new Proxy(this.ProxyType, new InetSocketAddress(this.ProxyIP, this.ProxyPort));
+            serverListPing17.setProxy(proxy);
+        }
+
+        StatusResponse statusResponse = serverListPing17.fetchData();
+
+        this.ServerMOTD = statusResponse.getDescription();
+        this.ServerPlayerCount = statusResponse.getPlayers().getOnline();
+        this.ServerMaxPlayerCount = statusResponse.getPlayers().getMax();
+        this.ServerIcon = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(statusResponse.getFavicon().split(",")[1])));
+        this.SamplePlayers = statusResponse.getPlayers().getSample().stream().map(Player::getName).collect(Collectors.toList());
+
     }
 }
